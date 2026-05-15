@@ -1,48 +1,70 @@
 <x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
-
-        <x-validation-errors class="mb-4" />
-
-        @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ $value }}
-            </div>
-        @endsession
-
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+    <div class="min-h-screen bg-white flex flex-col justify-center items-center px-4" x-data="{ showPassword: false }">
+        
+        <div class="w-full max-w-[400px] flex flex-col items-center">
+            
+            <!-- Logo -->
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-800 via-blue-600 to-teal-400 flex items-center justify-center mb-6 shadow-md">
+                <!-- Book/Nh Icon -->
+                <div class="bg-white rounded-sm px-1.5 py-0.5 text-xs font-black text-indigo-900 flex items-center gap-0.5 shadow-sm">
+                    <span class="text-blue-700">N</span><span class="text-teal-600 text-[10px]">h</span>
+                </div>
             </div>
 
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+            <!-- Header -->
+            <h1 class="text-[32px] font-bold text-slate-900 mb-8 tracking-tight">Log in</h1>
+
+            <x-validation-errors class="mb-4 w-full" />
+
+            @session('status')
+                <div class="mb-4 font-medium text-sm text-green-600 w-full text-center">
+                    {{ $value }}
+                </div>
+            @endsession
+
+            <!-- Form -->
+            <form method="POST" action="{{ route('login') }}" class="w-full" @submit.prevent="if(!showPassword) { showPassword = true; $refs.pwd.focus(); } else { $el.submit(); }">
+                @csrf
+
+                <!-- Email Input -->
+                <div class="mb-4">
+                    <input id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" 
+                           placeholder="Email"
+                           class="w-full px-4 py-3 rounded-md border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors text-slate-800 placeholder:text-slate-400">
+                </div>
+
+                <!-- Password Input (Hidden by default, shown when 'log in manually' is clicked) -->
+                <div x-show="showPassword" x-collapse class="mb-4">
+                    <input id="password" type="password" name="password" autocomplete="current-password" x-ref="pwd"
+                           placeholder="Password"
+                           class="w-full px-4 py-3 rounded-md border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors text-slate-800 placeholder:text-slate-400">
+                </div>
+
+                <!-- Remember Me (Hidden, but active for Fortify) -->
+                <input type="hidden" name="remember" value="on">
+
+                <!-- Submit Button -->
+                <button type="submit" 
+                        class="w-full bg-[#3b66d5] hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md transition-colors shadow-sm mb-4">
+                    <span x-text="showPassword ? 'Log in' : 'Continue with email'"></span>
+                </button>
+            </form>
+
+            <!-- Toggle Text -->
+            <div class="text-center text-sm text-slate-500 mb-8 leading-relaxed">
+                <p x-show="!showPassword">We'll email you a code to log in,<br>or you can <button @click="showPassword = true" type="button" class="text-[#3b66d5] hover:underline font-medium">log in manually</button>.</p>
+                <p x-show="showPassword" style="display: none;">Enter your password to log in,<br>or <button @click="showPassword = false" type="button" class="text-[#3b66d5] hover:underline font-medium">use a magic link instead</button>.</p>
             </div>
 
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
+            <!-- Divider -->
+            <div class="w-full h-px bg-slate-100 mb-8"></div>
 
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ms-4">
-                    {{ __('Log in') }}
-                </x-button>
+            <!-- Footer -->
+            <div class="text-center text-sm text-slate-500">
+                Don't have an account? 
+                <a href="{{ route('register') }}" class="text-[#3b66d5] hover:underline font-medium">Sign up</a>
             </div>
-        </form>
-    </x-authentication-card>
+            
+        </div>
+    </div>
 </x-guest-layout>
