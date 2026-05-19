@@ -23,10 +23,45 @@
                     radial-gradient(at 0% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
             }
             .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+            .btn-indigo {
+                background-color: #4f46e5;
+                color: #ffffff;
+                font-weight: 700;
+                padding: 0.75rem 1.5rem;
+                border-radius: 9999px;
+                box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.5);
+                transition: all 0.3s ease;
+            }
+            .btn-indigo:hover {
+                background-color: #4338ca;
+            }
+            .btn-indigo:active {
+                transform: scale(0.95);
+            }
+            .text-gradient {
+                background-image: linear-gradient(90deg, #4f46e5, #8b5cf6, #ec4899);
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                -webkit-text-fill-color: transparent;
+            }
         </style>
 
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            outfit: ['Outfit', 'sans-serif'],
+                        },
+                    },
+                },
+            }
+        </script>
+
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/js/app.js'])
 
         <!-- Styles -->
         @livewireStyles
