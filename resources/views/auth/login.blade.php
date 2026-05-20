@@ -4,11 +4,8 @@
         <div class="w-full max-w-[400px] flex flex-col items-center">
             
             <!-- Logo -->
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-800 via-blue-600 to-teal-400 flex items-center justify-center mb-6 shadow-md">
-                <!-- Book/Nh Icon -->
-                <div class="bg-white rounded-sm px-1.5 py-0.5 text-xs font-black text-indigo-900 flex items-center gap-0.5 shadow-sm">
-                    <span class="text-blue-700">N</span><span class="text-teal-600 text-[10px]">h</span>
-                </div>
+            <div class="mb-6">
+                <img src="{{ asset('images/logo.png') }}" alt="NoteHub logo" class="mx-auto h-20 w-20 object-contain" />
             </div>
 
             <!-- Header -->
