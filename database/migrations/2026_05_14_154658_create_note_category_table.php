@@ -8,16 +8,15 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * Junction table for Note "Categorized_As" Category (M:N) with relationship attribute Description.
      */
     public function up(): void
     {
-        Schema::create('reminders', function (Blueprint $table) {
-            $table->id(); // Reminder_ID
+        Schema::create('note_category', function (Blueprint $table) {
             $table->foreignId('note_id')->constrained()->cascadeOnDelete();
-            $table->string('status')->default('pending');
-            $table->string('notification_type')->default('push');
-            $table->dateTime('reminder_date_time');
-            $table->string('repeat_type')->default('none');
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            $table->text('description')->nullable();
+            $table->primary(['note_id', 'category_id']);
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reminders');
+        Schema::dropIfExists('note_category');
     }
 };

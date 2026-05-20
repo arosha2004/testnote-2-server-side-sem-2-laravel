@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('note_versions', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('note_id')->constrained()->cascadeOnDelete();
-            $table->string('title');
-            $table->longText('content')->nullable();
-            $table->timestamps();
+            $table->unsignedInteger('version_no'); // Partial key (weak entity)
+            $table->longText('updated_content')->nullable();
+            $table->timestamp('updated_date');
+            $table->primary(['note_id', 'version_no']);
         });
     }
 

@@ -9,10 +9,18 @@ class Reminder extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['note_id', 'reminder_time', 'repeat_type', 'status'];
+    public $timestamps = false;
+
+    protected $fillable = [
+        'note_id',
+        'status',
+        'notification_type',
+        'reminder_date_time',
+        'repeat_type',
+    ];
 
     protected $casts = [
-        'reminder_time' => 'datetime',
+        'reminder_date_time' => 'datetime',
     ];
 
     public function note()

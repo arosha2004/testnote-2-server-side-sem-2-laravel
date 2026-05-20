@@ -9,10 +9,17 @@ class Device extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'ip_address', 'user_agent', 'last_access_time'];
+    public $timestamps = false;
+
+    protected $fillable = [
+        'user_id',
+        'device_type',
+        'os',
+        'last_accessed_time',
+    ];
 
     protected $casts = [
-        'last_access_time' => 'datetime',
+        'last_accessed_time' => 'datetime',
     ];
 
     public function user()

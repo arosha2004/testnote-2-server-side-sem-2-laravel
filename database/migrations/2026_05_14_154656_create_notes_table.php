@@ -12,12 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('notes', function (Blueprint $table) {
-            $table->id();
+            $table->id(); // Note_id
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
             $table->string('title');
+            $table->boolean('is_pinned')->default(false);
             $table->longText('content')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->nullable(); // Created_date
+            $table->timestamp('updated_at')->nullable(); // Lastmodified_date
         });
     }
 

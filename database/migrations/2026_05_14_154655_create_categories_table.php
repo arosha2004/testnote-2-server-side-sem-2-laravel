@@ -12,11 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->string('color')->default('#000000');
-            $table->timestamps();
+            $table->id(); // Category_id
+            $table->string('category_name');
         });
     }
 

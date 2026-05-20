@@ -9,7 +9,20 @@ class NoteVersion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['note_id', 'title', 'content'];
+    public $incrementing = false;
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        'note_id',
+        'version_no',
+        'updated_content',
+        'updated_date',
+    ];
+
+    protected $casts = [
+        'updated_date' => 'datetime',
+    ];
 
     public function note()
     {

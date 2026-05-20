@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use App\Models\Category;
+use App\Models\Device;
 use App\Models\Note;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\NoteVersion;
+use App\Models\Reminder;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,62 +18,78 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Admin User
         $admin = User::create([
-            'name' => 'Admin User',
+            'first_name' => 'Admin',
+            'last_name' => 'User',
             'email' => 'admin@notehub.com',
             'password' => Hash::make('password'),
-            'role' => 'admin',
+            'user_role' => 'admin',
+            'phone_number' => '0771234567',
         ]);
 
-        // Regular User
         $user = User::create([
-            'name' => 'Test User',
+            'first_name' => 'Test',
+            'last_name' => 'User',
             'email' => 'test@notehub.com',
             'password' => Hash::make('password'),
-            'role' => 'user',
+            'user_role' => 'user',
         ]);
 
-        // Create Categories for Admin
-        $catWork = Category::create([
+        Device::create([
             'user_id' => $admin->id,
-            'name' => 'Work',
-            'color' => '#3b82f6',
-        ]);
-        
-        $catPersonal = Category::create([
-            'user_id' => $admin->id,
-            'name' => 'Personal',
-            'color' => '#10b981',
+            'device_type' => 'laptop',
+            'os' => 'Windows 11',
+            'last_accessed_time' => now(),
         ]);
 
-        // Create Notes for Admin
-        Note::create([
+        $catWork = Category::create(['category_name' => 'Work']);
+        $catPersonal = Category::create(['category_name' => 'Personal']);
+        $catStudy = Category::create(['category_name' => 'Study']);
+
+        $noteArchitecture = Note::create([
             'user_id' => $admin->id,
-            'category_id' => $catWork->id,
             'title' => 'Project Architecture',
             'content' => 'We need to use Laravel 12, Livewire, and Tailwind for the upcoming SaaS project.',
+            'is_pinned' => true,
         ]);
 
-        Note::create([
+        $noteArchitecture->categories()->attach($catWork->id, [
+            'description' => 'SaaS planning notes',
+        ]);
+
+        NoteVersion::create([
+            'note_id' => $noteArchitecture->id,
+            'version_no' => 1,
+            'updated_content' => 'Initial draft of architecture notes.',
+            'updated_date' => now()->subDay(),
+        ]);
+
+        Reminder::create([
+            'note_id' => $noteArchitecture->id,
+            'status' => 'pending',
+            'notification_type' => 'email',
+            'reminder_date_time' => now()->addDays(2),
+            'repeat_type' => 'none',
+        ]);
+
+        $noteGroceries = Note::create([
             'user_id' => $admin->id,
-            'category_id' => $catPersonal->id,
             'title' => 'Groceries',
             'content' => 'Milk, Eggs, Bread, and Coffee.',
         ]);
-        
-        // Create Categories for User
-        $userCat = Category::create([
-            'user_id' => $user->id,
-            'name' => 'Study',
-            'color' => '#8b5cf6',
+
+        $noteGroceries->categories()->attach($catPersonal->id, [
+            'description' => 'Weekly shopping list',
         ]);
 
-        Note::create([
+        $noteExam = Note::create([
             'user_id' => $user->id,
-            'category_id' => $userCat->id,
             'title' => 'Math Exam Prep',
             'content' => 'Review chapters 4 and 5.',
+        ]);
+
+        $noteExam->categories()->attach($catStudy->id, [
+            'description' => 'Semester 2 revision',
         ]);
     }
 }

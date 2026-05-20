@@ -9,15 +9,13 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'name', 'color'];
+    public $timestamps = false;
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $fillable = ['category_name'];
 
     public function notes()
     {
-        return $this->hasMany(Note::class);
+        return $this->belongsToMany(Note::class, 'note_category')
+            ->withPivot('description');
     }
 }
