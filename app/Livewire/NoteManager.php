@@ -6,10 +6,12 @@ use App\Models\Category;
 use App\Models\Note;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class NoteManager extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     public $categories;
 
@@ -26,6 +28,11 @@ class NoteManager extends Component
     public $search = '';
 
     public $filterCategory = '';
+
+    // File attachment (temporary upload)
+    public $attachment;
+    // Existing stored attachment path for the note
+    public $existing_attachment;
 
     protected $queryString = ['search', 'filterCategory'];
 
@@ -88,6 +95,8 @@ class NoteManager extends Component
         $this->content = '';
         $this->category_id = '';
         $this->note_id = '';
+        $this->attachment = null;
+        $this->existing_attachment = null;
         $this->resetValidation();
     }
 
@@ -97,6 +106,7 @@ class NoteManager extends Component
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'category_id' => 'nullable|exists:categories,id',
+            'attachment' => 'nullable|file|mimes:pdf,doc,docx,txt,md,rtf,odt|max:10240',
         ]);
 
         $note = auth()->user()->notes()->updateOrCreate(
@@ -110,6 +120,15 @@ class NoteManager extends Component
         $note->categories()->sync(
             $this->category_id ? [$this->category_id] : []
         );
+
+        // Handle uploaded attachment
+        if ($this->attachment) {
+            if ($this->existing_attachment) {
+                Storage::disk('public')->delete($this->existing_attachment);
+            }
+            $path = $this->attachment->store('notes', 'public');
+            $note->update(['attachment' => $path]);
+        }
 
         $nextVersion = (int) $note->versions()->max('version_no') + 1;
 
@@ -135,6 +154,7 @@ class NoteManager extends Component
         $this->title = $note->title;
         $this->content = $note->content;
         $this->category_id = $note->categories->first()?->id;
+        $this->existing_attachment = $note->attachment;
         $this->openModal();
     }
 

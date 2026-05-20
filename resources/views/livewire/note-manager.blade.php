@@ -129,6 +129,15 @@
                         <textarea wire:model="content" rows="8" class="input-field resize-y" placeholder="Write your note..."></textarea>
                         @error('content') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
                     </div>
+                    <div>
+                        <label class="mb-1.5 block text-sm font-medium text-slate-700">Attachment (optional)</label>
+                        <input type="file" wire:model="attachment" accept=".pdf,.doc,.docx,.txt,.md,.rtf,.odt" class="mt-1" />
+                        @error('attachment') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+
+                        @if($existing_attachment)
+                            <p class="mt-2 text-sm text-slate-600">Current: <a href="{{ Storage::url($existing_attachment) }}" target="_blank" class="text-indigo-600 hover:underline">Download</a></p>
+                        @endif
+                    </div>
                 </div>
                 <div class="flex justify-end gap-3 border-t border-slate-100 bg-slate-50/50 px-6 py-4">
                     <button wire:click="closeModal()" class="btn-secondary">Cancel</button>
