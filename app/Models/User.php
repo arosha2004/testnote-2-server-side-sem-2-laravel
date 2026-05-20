@@ -29,7 +29,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'first_name',
         'last_name',
         'email',
@@ -45,9 +44,39 @@ class User extends Authenticatable
         return $this->hasMany(Note::class);
     }
 
+    /**
+     * Categories linked to this user's notes (M:N via note_category).
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(
+            Category::class,
+            'note_category',
+            'note_id',
+            'category_id'
+        )->whereIn('note_category.note_id', function ($query) {
+            $query->select('id')->from('notes')->where('user_id', $this->getKey());
+        });
+    }
+
     public function devices()
     {
         return $this->hasMany(Device::class);
+    }
+
+    /**
+     * Split a full name into first and last name parts.
+     *
+     * @return array{first_name: string, last_name: string}
+     */
+    public static function parseFullName(string $fullName): array
+    {
+        $parts = preg_split('/\s+/', trim($fullName), 2);
+
+        return [
+            'first_name' => $parts[0] ?? '',
+            'last_name' => $parts[1] ?? '',
+        ];
     }
 
     /**

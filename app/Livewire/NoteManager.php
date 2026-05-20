@@ -2,41 +2,53 @@
 
 namespace App\Livewire;
 
+use App\Models\Category;
+use App\Models\Note;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Note;
-use App\Models\Category;
 
 class NoteManager extends Component
 {
     use WithPagination;
 
     public $categories;
-    public $title, $content, $category_id, $note_id;
+
+    public $title;
+
+    public $content;
+
+    public $category_id;
+
+    public $note_id;
+
     public $isOpen = false;
+
     public $search = '';
+
     public $filterCategory = '';
 
     protected $queryString = ['search', 'filterCategory'];
 
     public function mount()
     {
-        $this->categories = auth()->user()->categories;
+        $this->categories = Category::orderBy('category_name')->get();
     }
 
     public function render()
     {
-        $query = auth()->user()->notes()->with('category');
+        $query = auth()->user()->notes()->with('categories');
 
         if ($this->search) {
             $query->where(function ($q) {
-                $q->where('title', 'like', '%' . $this->search . '%')
-                  ->orWhere('content', 'like', '%' . $this->search . '%');
+                $q->where('title', 'like', '%'.$this->search.'%')
+                    ->orWhere('content', 'like', '%'.$this->search.'%');
             });
         }
 
         if ($this->filterCategory) {
-            $query->where('category_id', $this->filterCategory);
+            $query->whereHas('categories', function ($q) {
+                $q->where('categories.id', $this->filterCategory);
+            });
         }
 
         $notes = $query->latest()->paginate(9);
@@ -87,20 +99,30 @@ class NoteManager extends Component
             'category_id' => 'nullable|exists:categories,id',
         ]);
 
-        $note = auth()->user()->notes()->updateOrCreate(['id' => $this->note_id], [
-            'title' => $this->title,
-            'content' => $this->content,
-            'category_id' => $this->category_id ?: null,
-        ]);
+        $note = auth()->user()->notes()->updateOrCreate(
+            ['id' => $this->note_id],
+            [
+                'title' => $this->title,
+                'content' => $this->content,
+            ]
+        );
 
-        // Create version snapshot
+        $note->categories()->sync(
+            $this->category_id ? [$this->category_id] : []
+        );
+
+        $nextVersion = (int) $note->versions()->max('version_no') + 1;
+
         $note->versions()->create([
-            'title' => $note->title,
-            'content' => $note->content,
+            'version_no' => $nextVersion,
+            'updated_content' => $note->content,
+            'updated_date' => now(),
         ]);
 
-        session()->flash('message',
-            $this->note_id ? 'Note updated successfully.' : 'Note created successfully.');
+        session()->flash(
+            'message',
+            $this->note_id ? 'Note updated successfully.' : 'Note created successfully.'
+        );
 
         $this->closeModal();
         $this->resetInputFields();
@@ -108,11 +130,11 @@ class NoteManager extends Component
 
     public function edit($id)
     {
-        $note = auth()->user()->notes()->findOrFail($id);
+        $note = auth()->user()->notes()->with('categories')->findOrFail($id);
         $this->note_id = $id;
         $this->title = $note->title;
         $this->content = $note->content;
-        $this->category_id = $note->category_id;
+        $this->category_id = $note->categories->first()?->id;
         $this->openModal();
     }
 

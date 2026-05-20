@@ -27,11 +27,11 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         @forelse($categories as $cat)
             <div class="glass rounded-3xl shadow-sm card-hover overflow-hidden group border-0 ring-1 ring-white/50">
-                <div class="h-2" style="background-color: {{ $cat->color }}"></div>
+                <div class="h-2 bg-indigo-500"></div>
                 <div class="p-5">
                     <div class="flex items-center gap-3 mb-3">
-                        <div class="w-4 h-4 rounded-full border-2 border-white shadow-md" style="background-color: {{ $cat->color }}"></div>
-                        <h3 class="text-lg font-bold text-gray-900">{{ $cat->name }}</h3>
+                        <div class="w-4 h-4 rounded-full border-2 border-white shadow-md bg-indigo-500"></div>
+                        <h3 class="text-lg font-bold text-gray-900">{{ $cat->category_name }}</h3>
                     </div>
                     <p class="text-sm text-gray-500 mb-4">{{ $cat->notes_count }} {{ Str::plural('note', $cat->notes_count) }}</p>
                     <div class="flex space-x-2">
@@ -70,13 +70,6 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Category Name</label>
                             <input type="text" wire:model="name" class="w-full border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 shadow-sm" placeholder="e.g. Work, Personal, Study...">
                             @error('name') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>@enderror
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Color</label>
-                            <div class="flex items-center gap-3">
-                                <input type="color" wire:model="color" class="w-12 h-12 rounded-lg cursor-pointer border-2 border-gray-200">
-                                <input type="text" wire:model="color" class="flex-1 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 shadow-sm" placeholder="#6366f1">
-                            </div>
                         </div>
                     </div>
                     <div class="bg-gray-50 px-6 py-4 flex justify-end gap-3 border-t">

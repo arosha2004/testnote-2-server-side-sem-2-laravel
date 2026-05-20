@@ -8,54 +8,44 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        return response()->json($request->user()->categories);
+        return response()->json(Category::orderBy('category_name')->get());
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'color' => 'nullable|string|max:7',
         ]);
 
-        $category = $request->user()->categories()->create($validated);
+        $category = Category::create([
+            'category_name' => $validated['name'],
+        ]);
 
         return response()->json($category, 201);
     }
 
-    public function show(Request $request, Category $category)
+    public function show(Category $category)
     {
-        if ($category->user_id !== $request->user()->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
         return response()->json($category);
     }
 
     public function update(Request $request, Category $category)
     {
-        if ($category->user_id !== $request->user()->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
-            'color' => 'nullable|string|max:7',
         ]);
 
-        $category->update($validated);
+        $category->update([
+            'category_name' => $validated['name'] ?? $category->category_name,
+        ]);
 
         return response()->json($category);
     }
 
-    public function destroy(Request $request, Category $category)
+    public function destroy(Category $category)
     {
-        if ($category->user_id !== $request->user()->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
         $category->delete();
 
         return response()->json(null, 204);

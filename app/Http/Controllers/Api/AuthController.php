@@ -19,7 +19,7 @@ class AuthController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            ...User::parseFullName($request->name),
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -52,10 +52,12 @@ class AuthController extends Controller
         // Record device login if requested (Multi Device Tracking)
         if ($request->device_name) {
             $user->devices()->create([
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent(),
-                'last_access_time' => now(),
+                'device_type' => $request->device_name,
+                'os' => $request->header('User-Agent', 'unknown'),
+                'last_accessed_time' => now(),
             ]);
+
+            $user->update(['last_login_time' => now()]);
         }
 
         $token = $user->createToken($request->device_name ?? 'auth_token')->plainTextToken;

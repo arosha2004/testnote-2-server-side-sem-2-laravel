@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>NOTEHUB - Your Second Brain</title>
+        <title>NoteHub - Your Second Brain</title>
+        <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,12 +63,10 @@
         <!-- Floating Navbar -->
         <div class="fixed top-0 w-full z-50 px-4 sm:px-6 lg:px-8 pt-6">
             <nav class="max-w-7xl mx-auto glass rounded-full px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:justify-between gap-4 sm:items-center shadow-lg border border-white/40">
-                <div class="flex-shrink-0 flex items-center gap-2">
-                    <div class="w-8 h-8 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                    </div>
-                    <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tight">NOTEHUB</span>
-                </div>
+                <a href="/" class="flex shrink-0 items-center gap-2.5">
+                    <img src="{{ asset('images/logo.png') }}" alt="NoteHub" class="h-10 w-10 rounded-full object-cover shadow-sm ring-1 ring-white/80">
+                    <span class="text-2xl font-bold tracking-tight text-brand-navy">NoteHub</span>
+                </a>
                 <div class="flex flex-wrap justify-center gap-4 sm:gap-8 md:justify-start">
                     <a href="#features" class="text-sm font-bold text-slate-600 hover:text-indigo-600 transition">Features</a>
                     <a href="#how-it-works" class="text-sm font-bold text-slate-600 hover:text-indigo-600 transition">How it Works</a>
@@ -253,17 +252,11 @@
         <!-- Footer -->
         <footer class="bg-white border-t border-slate-100 py-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="flex items-center gap-2">
-                    <div class="w-6 h-6 bg-indigo-600 rounded-lg flex items-center justify-center">
-                        <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                    </div>
-                    <span class="text-xl font-black text-slate-900 tracking-tight">NOTEHUB</span>
+                <div class="flex items-center gap-2.5">
+                    <img src="{{ asset('images/logo.png') }}" alt="NoteHub" class="h-8 w-8 rounded-full object-cover">
+                    <span class="text-xl font-bold tracking-tight text-brand-navy">NoteHub</span>
                 </div>
-                <p class="text-slate-500 font-medium">© {{ date('Y') }} NOTEHUB SaaS Platform. All rights reserved.</p>
-                <div class="flex gap-4">
-                    <a href="#" class="text-slate-400 hover:text-indigo-600 transition">Twitter</a>
-                    <a href="#" class="text-slate-400 hover:text-indigo-600 transition">GitHub</a>
-                </div>
+                <p class="text-slate-500 font-medium">© {{ date('Y') }} NoteHub. All rights reserved.</p>
             </div>
         </footer>
     </body>

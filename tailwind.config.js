@@ -14,7 +14,14 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Outfit', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                brand: {
+                    navy: '#0f2d5c',
+                    teal: '#0d9488',
+                    orange: '#f97316',
+                },
             },
         },
     },

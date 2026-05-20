@@ -2,18 +2,25 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Category;
+use Livewire\Component;
 
 class CategoryManager extends Component
 {
     public $categories;
-    public $name, $color = '#6366f1', $category_id;
+
+    public $name;
+
+    public $category_id;
+
     public $isOpen = false;
 
     public function render()
     {
-        $this->categories = auth()->user()->categories()->withCount('notes')->get();
+        $this->categories = Category::withCount(['notes' => function ($query) {
+            $query->where('user_id', auth()->id());
+        }])->orderBy('category_name')->get();
+
         return view('livewire.category-manager');
     }
 
@@ -36,7 +43,6 @@ class CategoryManager extends Component
     private function resetInputFields()
     {
         $this->name = '';
-        $this->color = '#6366f1';
         $this->category_id = '';
         $this->resetValidation();
     }
@@ -45,16 +51,17 @@ class CategoryManager extends Component
     {
         $this->validate([
             'name' => 'required|string|max:255',
-            'color' => 'required|string|max:7',
         ]);
 
-        auth()->user()->categories()->updateOrCreate(['id' => $this->category_id], [
-            'name' => $this->name,
-            'color' => $this->color,
-        ]);
+        Category::updateOrCreate(
+            ['id' => $this->category_id ?: null],
+            ['category_name' => $this->name]
+        );
 
-        session()->flash('message',
-            $this->category_id ? 'Category updated successfully.' : 'Category created successfully.');
+        session()->flash(
+            'message',
+            $this->category_id ? 'Category updated successfully.' : 'Category created successfully.'
+        );
 
         $this->closeModal();
         $this->resetInputFields();
@@ -62,16 +69,15 @@ class CategoryManager extends Component
 
     public function edit($id)
     {
-        $cat = auth()->user()->categories()->findOrFail($id);
+        $cat = Category::findOrFail($id);
         $this->category_id = $id;
-        $this->name = $cat->name;
-        $this->color = $cat->color;
+        $this->name = $cat->category_name;
         $this->openModal();
     }
 
     public function delete($id)
     {
-        auth()->user()->categories()->findOrFail($id)->delete();
+        Category::findOrFail($id)->delete();
         session()->flash('message', 'Category deleted successfully.');
     }
 }

@@ -10,7 +10,8 @@ class NoteController extends Controller
 {
     public function index(Request $request)
     {
-        $notes = $request->user()->notes()->with('category')->latest()->paginate(10);
+        $notes = $request->user()->notes()->with('categories')->latest()->paginate(10);
+
         return response()->json($notes);
     }
 
@@ -22,15 +23,22 @@ class NoteController extends Controller
             'category_id' => 'nullable|exists:categories,id',
         ]);
 
-        $note = $request->user()->notes()->create($validated);
-
-        // Auto-save first version
-        $note->versions()->create([
-            'title' => $note->title,
-            'content' => $note->content,
+        $note = $request->user()->notes()->create([
+            'title' => $validated['title'],
+            'content' => $validated['content'] ?? null,
         ]);
 
-        return response()->json($note, 201);
+        if (! empty($validated['category_id'])) {
+            $note->categories()->sync([$validated['category_id']]);
+        }
+
+        $note->versions()->create([
+            'version_no' => 1,
+            'updated_content' => $note->content,
+            'updated_date' => now(),
+        ]);
+
+        return response()->json($note->load('categories'), 201);
     }
 
     public function show(Request $request, Note $note)
@@ -39,7 +47,8 @@ class NoteController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $note->load(['category', 'versions', 'reminders']);
+        $note->load(['categories', 'versions', 'reminders']);
+
         return response()->json($note);
     }
 
@@ -55,17 +64,25 @@ class NoteController extends Controller
             'category_id' => 'nullable|exists:categories,id',
         ]);
 
-        $note->update($validated);
+        $note->update(collect($validated)->only(['title', 'content'])->all());
 
-        // Save a new version if content changed
+        if (array_key_exists('category_id', $validated)) {
+            $note->categories()->sync(
+                $validated['category_id'] ? [$validated['category_id']] : []
+            );
+        }
+
         if ($note->wasChanged(['title', 'content'])) {
+            $nextVersion = (int) $note->versions()->max('version_no') + 1;
+
             $note->versions()->create([
-                'title' => $note->title,
-                'content' => $note->content,
+                'version_no' => $nextVersion,
+                'updated_content' => $note->content,
+                'updated_date' => now(),
             ]);
         }
 
-        return response()->json($note);
+        return response()->json($note->load('categories'));
     }
 
     public function destroy(Request $request, Note $note)

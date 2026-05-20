@@ -174,9 +174,9 @@
                                 </td>
                                 <td class="px-6 py-4 text-sm text-gray-700">{{ $note->user->name ?? 'N/A' }}</td>
                                 <td class="px-6 py-4">
-                                    @if($note->category)
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background-color: {{ $note->category->color }}20; color: {{ $note->category->color }}">
-                                            {{ $note->category->name }}
+                                    @if($note->categories->isNotEmpty())
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-600">
+                                            {{ $note->categories->pluck('category_name')->join(', ') }}
                                         </span>
                                     @else
                                         <span class="text-gray-400 text-xs">Uncategorized</span>

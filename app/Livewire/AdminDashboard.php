@@ -33,14 +33,17 @@ class AdminDashboard extends Component
     public function render()
     {
         $users = User::when($this->search, function ($q) {
-                $q->where('name', 'like', '%' . $this->search . '%')
-                  ->orWhere('email', 'like', '%' . $this->search . '%');
+                $q->where(function ($query) {
+                    $query->where('first_name', 'like', '%'.$this->search.'%')
+                        ->orWhere('last_name', 'like', '%'.$this->search.'%')
+                        ->orWhere('email', 'like', '%'.$this->search.'%');
+                });
             })
             ->withCount('notes')
             ->latest()
             ->paginate(10);
 
-        $notes = Note::with(['user', 'category'])
+        $notes = Note::with(['user', 'categories'])
             ->when($this->search, function ($q) {
                 $q->where('title', 'like', '%' . $this->search . '%');
             })
