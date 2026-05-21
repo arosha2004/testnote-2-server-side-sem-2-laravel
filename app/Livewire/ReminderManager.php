@@ -64,7 +64,7 @@ class ReminderManager extends Component
 
         Reminder::updateOrCreate(['id' => $this->reminder_id], [
             'note_id' => $this->note_id,
-            'reminder_time' => $this->reminder_time,
+            'reminder_date_time' => $this->reminder_time,
             'repeat_type' => $this->repeat_type,
             'status' => 'pending',
         ]);
@@ -84,7 +84,7 @@ class ReminderManager extends Component
 
         $this->reminder_id = $id;
         $this->note_id = $reminder->note_id;
-        $this->reminder_time = $reminder->reminder_time->format('Y-m-d\TH:i');
+        $this->reminder_time = $reminder->reminder_date_time->format('Y-m-d\TH:i');
         $this->repeat_type = $reminder->repeat_type;
         $this->openModal();
     }

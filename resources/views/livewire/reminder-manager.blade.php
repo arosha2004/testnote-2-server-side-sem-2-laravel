@@ -43,8 +43,8 @@
                                 <div class="text-sm font-semibold text-gray-900">{{ $reminder->note->title }}</div>
                             </td>
                             <td class="px-6 py-4">
-                                <div class="text-sm text-gray-700">{{ $reminder->reminder_time->format('M d, Y — h:i A') }}</div>
-                                <div class="text-xs text-gray-400">{{ $reminder->reminder_time->diffForHumans() }}</div>
+                                <div class="text-sm text-gray-700">{{ $reminder->reminder_date_time?->format('M d, Y — h:i A') ?? 'N/A' }}</div>
+                                <div class="text-xs text-gray-400">{{ $reminder->reminder_date_time?->diffForHumans() ?? '' }}</div>
                             </td>
                             <td class="px-6 py-4">
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 capitalize">
