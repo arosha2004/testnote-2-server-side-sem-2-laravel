@@ -118,50 +118,47 @@
                 </div>
             </div>
             
-            <!-- Dashboard CSS Mockup -->
-            <div class="max-w-6xl mx-auto mt-24 px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="floating">
-                    <div class="relative rounded-[2.5rem] shadow-2xl shadow-indigo-500/20 border border-white overflow-hidden bg-white/80 backdrop-blur-xl aspect-[4/3] lg:aspect-video p-6 flex flex-col gap-6 ring-1 ring-slate-900/5">
-                        <!-- Top Bar Mockup -->
-                        <div class="flex items-center gap-2 mb-2">
-                            <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                            <div class="w-3 h-3 rounded-full bg-amber-400"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-400"></div>
-                        </div>
+            <!-- Dashboard Showcase -->
+            <div class="max-w-7xl mx-auto mt-24 px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-5 text-left">
+                        <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-6 leading-tight">
+                            Experience a beautifully <br/> 
+                            <span class="text-indigo-600">designed workspace</span>
+                        </h2>
+                        <p class="text-lg text-slate-600 mb-8 font-medium">
+                            Say goodbye to cluttered interfaces. NoteHub offers a crystal-clear, distraction-free environment to organize your thoughts, tasks, and ideas with elegance.
+                        </p>
                         
-                        <div class="flex flex-col lg:flex-row h-full gap-6">
-                            <!-- Sidebar -->
-                            <div class="w-full lg:w-1/4 bg-slate-50/50 rounded-3xl p-5 border border-slate-100 flex flex-col gap-4">
-                                <div class="h-10 w-full bg-indigo-50 rounded-xl flex items-center px-4">
-                                    <div class="h-4 w-1/2 bg-indigo-200 rounded-full"></div>
-                                </div>
-                                <div class="space-y-3 mt-4">
-                                    <div class="h-4 w-3/4 bg-slate-200 rounded-full"></div>
-                                    <div class="h-4 w-2/3 bg-slate-200 rounded-full"></div>
-                                    <div class="h-4 w-1/2 bg-slate-200 rounded-full"></div>
-                                </div>
-                            </div>
-                            <!-- Content -->
-                            <div class="flex-1 flex flex-col gap-6">
-                                <div class="flex justify-between items-center">
-                                    <div class="h-8 w-1/3 bg-slate-100 rounded-xl"></div>
-                                    <div class="h-12 w-40 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-200"></div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                    <div class="h-32 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl p-5 relative overflow-hidden">
-                                        <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
-                                    </div>
-                                    <div class="h-32 bg-white border border-slate-100 rounded-3xl shadow-sm p-5"></div>
-                                    <div class="h-32 bg-white border border-slate-100 rounded-3xl shadow-sm p-5"></div>
-                                </div>
-                                <div class="flex-1 bg-slate-50/50 rounded-3xl border border-slate-100 p-6">
-                                    <div class="h-5 w-1/4 bg-slate-200 rounded-full mb-6"></div>
-                                    <div class="space-y-4">
-                                        <div class="h-4 w-full bg-slate-100 rounded-full"></div>
-                                        <div class="h-4 w-5/6 bg-slate-100 rounded-full"></div>
-                                        <div class="h-4 w-4/6 bg-slate-100 rounded-full"></div>
-                                    </div>
-                                </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold">✓</div>
+                                <span class="text-slate-700 font-medium">Intuitive Folder Organization</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">✓</div>
+                                <span class="text-slate-700 font-medium">Rich Text Editor & Markdown</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold">✓</div>
+                                <span class="text-slate-700 font-medium">Smart Tags & Reminders</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lg:col-span-7 relative floating">
+                        <!-- Decorative glow behind image -->
+                        <div class="absolute -inset-4 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-[2.5rem] opacity-20 blur-2xl"></div>
+                        
+                        <!-- The Picture -->
+                        <img src="{{ asset('images/dashboard-mockup.png') }}" alt="Dashboard Preview" class="relative rounded-[2rem] shadow-2xl border border-white/50 w-full h-auto object-cover ring-1 ring-slate-900/5 bg-white/50 backdrop-blur-sm">
+                        
+                        <!-- Floating badge (words) -->
+                        <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-4 border border-slate-100 animate-bounce" style="animation-duration: 3s;">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-2xl">🚀</div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Productivity</p>
+                                <p class="text-sm text-slate-900 font-black">Boosted by 200%</p>
                             </div>
                         </div>
                     </div>
@@ -229,6 +226,50 @@
                         </div>
                         <h3 class="text-xl font-black text-slate-900 mb-3">Time Travel</h3>
                         <p class="text-slate-500 font-medium leading-relaxed">Accidentally deleted a paragraph? Restore older versions of your notes instantly with full history.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How it Works -->
+        <div id="how-it-works" class="py-32 bg-white border-y border-slate-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-20">
+                    <h2 class="text-indigo-600 font-black tracking-widest uppercase text-sm mb-3">Simple Process</h2>
+                    <p class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+                        How NoteHub Works
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+                    <!-- Connecting Line -->
+                    <div class="hidden md:block absolute top-10 left-[16.66%] right-[16.66%] h-1 bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 z-0"></div>
+
+                    <!-- Step 1 -->
+                    <div class="relative z-10 flex flex-col items-center text-center group">
+                        <div class="w-20 h-20 bg-white rounded-full border-4 border-indigo-100 shadow-xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-indigo-300 transition-all duration-300">
+                            <span class="text-2xl font-black text-indigo-600">1</span>
+                        </div>
+                        <h3 class="text-xl font-black text-slate-900 mb-3">Sign Up Free</h3>
+                        <p class="text-slate-500 font-medium leading-relaxed">Create your account in seconds. No credit card required, just your email.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative z-10 flex flex-col items-center text-center group">
+                        <div class="w-20 h-20 bg-white rounded-full border-4 border-purple-100 shadow-xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-purple-300 transition-all duration-300">
+                            <span class="text-2xl font-black text-purple-600">2</span>
+                        </div>
+                        <h3 class="text-xl font-black text-slate-900 mb-3">Capture Ideas</h3>
+                        <p class="text-slate-500 font-medium leading-relaxed">Start writing notes, creating categories, and setting reminders instantly.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative z-10 flex flex-col items-center text-center group">
+                        <div class="w-20 h-20 bg-white rounded-full border-4 border-pink-100 shadow-xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-pink-300 transition-all duration-300">
+                            <span class="text-2xl font-black text-pink-600">3</span>
+                        </div>
+                        <h3 class="text-xl font-black text-slate-900 mb-3">Stay Organized</h3>
+                        <p class="text-slate-500 font-medium leading-relaxed">Access your structured knowledge base from any device, anytime.</p>
                     </div>
                 </div>
             </div>

@@ -25,6 +25,10 @@ class NoteManager extends Component
 
     public $isOpen = false;
 
+    public $isViewing = false;
+
+    public $viewingNote = null;
+
     public $search = '';
 
     public $filterCategory = '';
@@ -147,6 +151,18 @@ class NoteManager extends Component
         $this->resetInputFields();
     }
 
+    public function view($id)
+    {
+        $this->viewingNote = auth()->user()->notes()->with('categories')->findOrFail($id);
+        $this->isViewing = true;
+    }
+
+    public function closeViewModal()
+    {
+        $this->isViewing = false;
+        $this->viewingNote = null;
+    }
+
     public function edit($id)
     {
         $note = auth()->user()->notes()->with('categories')->findOrFail($id);
@@ -155,6 +171,9 @@ class NoteManager extends Component
         $this->content = $note->content;
         $this->category_id = $note->categories->first()?->id;
         $this->existing_attachment = $note->attachment;
+        if ($this->isViewing) {
+            $this->closeViewModal();
+        }
         $this->openModal();
     }
 
@@ -162,5 +181,8 @@ class NoteManager extends Component
     {
         auth()->user()->notes()->findOrFail($id)->delete();
         session()->flash('message', 'Note deleted successfully.');
+        if ($this->isViewing && $this->viewingNote && $this->viewingNote->id == $id) {
+            $this->closeViewModal();
+        }
     }
 }
