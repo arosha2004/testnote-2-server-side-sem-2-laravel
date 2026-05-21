@@ -67,7 +67,7 @@
                             <button wire:click="edit({{ $note->id }})" class="rounded-lg p-2 text-slate-500 transition hover:bg-white hover:text-indigo-600" title="Edit">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                             </button>
-                            <button wire:click="delete({{ $note->id }})" wire:confirm="Delete this note?" class="rounded-lg p-2 text-slate-500 transition hover:bg-white hover:text-red-600" title="Delete">
+                            <button wire:click="confirmDelete({{ $note->id }})" class="rounded-lg p-2 text-slate-500 transition hover:bg-white hover:text-red-600" title="Delete">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                             </button>
                         </div>
@@ -207,7 +207,7 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-t border-slate-100 bg-slate-50/80 px-8 py-5 sm:px-10 gap-4">
-                    <button wire:click="delete({{ $viewingNote->id }})" wire:confirm="Are you sure you want to delete this note?" class="flex items-center gap-2 text-sm font-bold text-red-500 hover:text-red-700 transition-colors order-2 sm:order-1 self-start sm:self-auto mt-2 sm:mt-0">
+                    <button wire:click="confirmDelete({{ $viewingNote->id }})" class="flex items-center gap-2 text-sm font-bold text-red-500 hover:text-red-700 transition-colors order-2 sm:order-1 self-start sm:self-auto mt-2 sm:mt-0">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                         Delete Note
                     </button>
@@ -220,6 +220,34 @@
                             Edit Note
                         </button>
                     </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- Delete Confirmation Modal --}}
+    @if($isConfirmingDelete)
+        <div class="fixed inset-0 z-[110] flex items-center justify-center p-4">
+            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" wire:click="cancelDelete()"></div>
+            <div class="relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-slate-900/5 transition-all">
+                <div class="p-6">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:h-10 sm:w-10">
+                            <svg class="h-6 w-6 text-red-600 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">Delete note</h3>
+                            <p class="mt-2 text-sm text-slate-500">Are you sure you want to delete this note? This action cannot be undone and you will lose all the content permanently.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row-reverse gap-3 bg-slate-50 px-6 py-4">
+                    <button wire:click="deleteNote()" class="rounded-xl bg-red-600 px-5 py-2 text-sm font-bold text-white shadow-sm hover:bg-red-700 transition-colors">
+                        Delete
+                    </button>
+                    <button wire:click="cancelDelete()" class="rounded-xl bg-white px-5 py-2 text-sm font-bold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50 transition-colors">
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>

@@ -29,6 +29,10 @@ class NoteManager extends Component
 
     public $viewingNote = null;
 
+    public $isConfirmingDelete = false;
+
+    public $noteIdToDelete = null;
+
     public $search = '';
 
     public $filterCategory = '';
@@ -177,12 +181,27 @@ class NoteManager extends Component
         $this->openModal();
     }
 
-    public function delete($id)
+    public function confirmDelete($id)
     {
-        auth()->user()->notes()->findOrFail($id)->delete();
-        session()->flash('message', 'Note deleted successfully.');
-        if ($this->isViewing && $this->viewingNote && $this->viewingNote->id == $id) {
-            $this->closeViewModal();
+        $this->noteIdToDelete = $id;
+        $this->isConfirmingDelete = true;
+    }
+
+    public function cancelDelete()
+    {
+        $this->isConfirmingDelete = false;
+        $this->noteIdToDelete = null;
+    }
+
+    public function deleteNote()
+    {
+        if ($this->noteIdToDelete) {
+            auth()->user()->notes()->findOrFail($this->noteIdToDelete)->delete();
+            session()->flash('message', 'Note deleted successfully.');
+            if ($this->isViewing && $this->viewingNote && $this->viewingNote->id == $this->noteIdToDelete) {
+                $this->closeViewModal();
+            }
+            $this->cancelDelete();
         }
     }
 }

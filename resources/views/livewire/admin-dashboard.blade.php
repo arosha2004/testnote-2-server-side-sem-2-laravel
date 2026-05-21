@@ -75,6 +75,78 @@
         </div>
     </div>
 
+    {{-- Charts Section --}}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8" wire:ignore x-data="{
+        initCharts() {
+            const userCtx = document.getElementById('userGrowthChart').getContext('2d');
+            new Chart(userCtx, {
+                type: 'line',
+                data: {
+                    labels: @js($userGrowthLabels),
+                    datasets: [{
+                        label: 'New Users',
+                        data: @js($userGrowthData),
+                        borderColor: '#4f46e5',
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                }
+            });
+
+            const noteCtx = document.getElementById('noteGrowthChart').getContext('2d');
+            new Chart(noteCtx, {
+                type: 'bar',
+                data: {
+                    labels: @js($noteGrowthLabels),
+                    datasets: [{
+                        label: 'Notes Created',
+                        data: @js($noteGrowthData),
+                        backgroundColor: '#8b5cf6',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                }
+            });
+        }
+    }" x-init="
+        if (typeof Chart === 'undefined') {
+            let script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+            script.onload = () => initCharts();
+            document.head.appendChild(script);
+        } else {
+            initCharts();
+        }
+    ">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-1">User Growth</h3>
+            <p class="text-sm text-gray-500 mb-6">New users registered in the last 7 days</p>
+            <div class="relative h-64 w-full">
+                <canvas id="userGrowthChart"></canvas>
+            </div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-1">Note Creation</h3>
+            <p class="text-sm text-gray-500 mb-6">Total notes created in the last 7 days</p>
+            <div class="relative h-64 w-full">
+                <canvas id="noteGrowthChart"></canvas>
+            </div>
+        </div>
+    </div>
+
     {{-- Search + Tabs --}}
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 py-4 border-b border-gray-100">
