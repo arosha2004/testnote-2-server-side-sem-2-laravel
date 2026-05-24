@@ -66,7 +66,7 @@ class NoteManager extends Component
             });
         }
 
-        $notes = $query->latest()->paginate(9);
+        $notes = $query->orderBy('is_pinned', 'desc')->latest()->paginate(9);
 
         return view('livewire.note-manager', ['notes' => $notes]);
     }
@@ -202,6 +202,16 @@ class NoteManager extends Component
                 $this->closeViewModal();
             }
             $this->cancelDelete();
+        }
+    }
+
+    public function togglePin($id)
+    {
+        $note = auth()->user()->notes()->findOrFail($id);
+        $note->update(['is_pinned' => !$note->is_pinned]);
+        
+        if ($this->isViewing && $this->viewingNote && $this->viewingNote->id == $id) {
+            $this->viewingNote->is_pinned = $note->is_pinned;
         }
     }
 }

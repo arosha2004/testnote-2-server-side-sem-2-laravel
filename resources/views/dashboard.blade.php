@@ -1,30 +1,27 @@
 <x-app-layout>
     @php
         $user = auth()->user();
-        $hour = now()->hour;
-        $greeting = $hour < 12 ? 'Good morning' : ($hour < 17 ? 'Good afternoon' : 'Good evening');
     @endphp
 
     <div class="min-h-screen pb-16">
         <div class="dashboard-shell space-y-8 py-8">
             {{-- Welcome banner --}}
             <section class="dashboard-hero">
-                <div class="absolute inset-0 bg-gradient-to-br from-teal-50/80 via-white to-slate-50/50"></div>
-                <div class="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-teal-100/40 blur-2xl"></div>
-                <div class="absolute -bottom-10 left-1/3 h-32 w-32 rounded-full bg-brand-navy/10 blur-2xl"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-teal-50/80 via-white to-slate-50/50 dark:from-slate-800 dark:via-slate-800 dark:to-slate-800/50 transition-colors duration-200"></div>
+                <div class="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-teal-100/40 dark:bg-teal-900/20 blur-2xl transition-colors duration-200"></div>
+                <div class="absolute -bottom-10 left-1/3 h-32 w-32 rounded-full bg-brand-navy/10 dark:bg-brand-teal/10 blur-2xl transition-colors duration-200"></div>
                 <div class="relative flex flex-col gap-6 p-8 sm:flex-row sm:items-center sm:justify-between">
                     <div class="flex items-start gap-5">
                         <img
                             src="{{ asset('images/logo.png') }}"
                             alt="NoteHub"
-                            class="hidden h-16 w-16 shrink-0 rounded-full object-cover shadow-md ring-2 ring-white sm:block"
+                            class="hidden h-16 w-16 shrink-0 rounded-full object-cover shadow-md ring-2 ring-white dark:ring-slate-700 sm:block transition-all duration-200"
                         >
                     <div>
-                        <p class="text-sm font-medium text-brand-teal">{{ $greeting }}</p>
-                        <h1 class="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                        <h1 class="mt-1 text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl transition-colors duration-200">
                             Welcome back, {{ $user->first_name }}
                         </h1>
-                        <p class="mt-2 max-w-xl text-sm text-slate-600">
+                        <p class="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-300 transition-colors duration-200">
                             Manage your notes, categories, and reminders from one place. Stay organized and productive.
                         </p>
                     </div>

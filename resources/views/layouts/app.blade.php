@@ -22,11 +22,11 @@
     <body class="font-sans antialiased">
         <x-banner />
 
-        <div class="min-h-screen bg-slate-50">
+        <div class="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-200">
             @livewire('navigation-menu')
 
             @if (isset($header))
-                <header class="border-b border-slate-200/80 bg-white">
+                <header class="border-b border-slate-200/80 bg-white dark:bg-slate-900/80 dark:border-slate-800 transition-colors duration-200">
                     <div class="dashboard-shell py-6">
                         {{ $header }}
                     </div>
