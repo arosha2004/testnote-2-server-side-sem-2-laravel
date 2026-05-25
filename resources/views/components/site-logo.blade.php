@@ -24,9 +24,9 @@
     <img
         src="{{ asset('images/logo.png') }}"
         alt="NoteHub logo"
-        class="{{ $s['img'] }} shrink-0 rounded-full object-cover shadow-sm ring-1 ring-slate-200/80"
+        class="{{ $s['img'] }} shrink-0 rounded-full object-cover shadow-sm ring-2 ring-slate-200/80 dark:ring-slate-700 transition-colors"
     >
     @if($showText)
-        <span class="{{ $s['text'] }} font-bold tracking-tight text-brand-navy">NoteHub</span>
+        <span class="{{ $s['text'] }} font-bold tracking-tight text-brand-navy dark:text-white transition-colors">NoteHub</span>
     @endif
 </{{ $tag }}>
