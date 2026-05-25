@@ -8,6 +8,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class NoteManager extends Component
 {
@@ -213,5 +214,16 @@ class NoteManager extends Component
         if ($this->isViewing && $this->viewingNote && $this->viewingNote->id == $id) {
             $this->viewingNote->is_pinned = $note->is_pinned;
         }
+    }
+
+    public function exportPdf($id)
+    {
+        $note = auth()->user()->notes()->with('categories')->findOrFail($id);
+        
+        $pdf = Pdf::loadView('pdf.note', ['note' => $note]);
+        
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->stream();
+        }, 'note-' . $note->id . '.pdf');
     }
 }
