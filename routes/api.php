@@ -10,11 +10,6 @@ use App\Http\Controllers\Api\AdminController;
 
 // ─── Web Routes (with web middleware) ────────────────────────────
 Route::middleware('web')->group(function () {
-    // Public Landing Page
-    Route::get('/', function () {
-        return view('landing');
-    })->name('home');
-
     // Authenticated User Routes
     Route::middleware([
         'auth:sanctum',
