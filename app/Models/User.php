@@ -37,6 +37,8 @@ class User extends Authenticatable
         'phone_number',
         'registered_date',
         'last_login_time',
+        'google_id',
+        'google_token',
     ];
 
     public function notes()
