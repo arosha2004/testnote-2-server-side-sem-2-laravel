@@ -20,6 +20,9 @@
                     <a href="{{ route('history') }}" class="{{ request()->routeIs('history') ? 'nav-pill-active' : 'nav-pill' }}">
                         History
                     </a>
+                    <a href="{{ route('trash') }}" class="{{ request()->routeIs('trash') ? 'nav-pill-active' : 'nav-pill' }}">
+                        Trash
+                    </a>
                     @if(auth()->user()?->role === 'admin')
                         <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.*') ? 'nav-pill-active' : 'nav-pill' }}">
                             Admin
@@ -85,6 +88,7 @@
             <a href="{{ route('categories') }}" class="{{ request()->routeIs('categories') ? 'nav-pill-active block' : 'nav-pill block' }}">Categories</a>
             <a href="{{ route('reminders') }}" class="{{ request()->routeIs('reminders') ? 'nav-pill-active block' : 'nav-pill block' }}">Reminders</a>
             <a href="{{ route('history') }}" class="{{ request()->routeIs('history') ? 'nav-pill-active block' : 'nav-pill block' }}">History</a>
+            <a href="{{ route('trash') }}" class="{{ request()->routeIs('trash') ? 'nav-pill-active block' : 'nav-pill block' }}">Trash</a>
         </div>
     </div>
 </nav>

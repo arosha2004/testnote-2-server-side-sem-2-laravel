@@ -57,7 +57,9 @@ class User extends Authenticatable
             'note_id',
             'category_id'
         )->whereIn('note_category.note_id', function ($query) {
-            $query->select('id')->from('notes')->where('user_id', $this->getKey());
+            $query->select('id')->from('notes')
+                ->where('user_id', $this->getKey())
+                ->whereNull('deleted_at');
         });
     }
 

@@ -35,6 +35,10 @@ Route::middleware('web')->group(function () {
         Route::get('/history', function () {
             return view('history');
         })->name('history');
+
+        Route::get('/trash', function () {
+            return view('trash');
+        })->name('trash');
     });
 
     // Admin Routes
