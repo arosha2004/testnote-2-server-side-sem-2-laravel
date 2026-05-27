@@ -21,7 +21,7 @@ class ReminderManager extends Component
     {
         $this->reminders = Reminder::whereHas('note', function ($q) {
             $q->where('user_id', auth()->id());
-        })->with('note')->latest()->get();
+        })->with('note')->latest('id')->get();
 
         return view('livewire.reminder-manager');
     }

@@ -13,7 +13,7 @@ class ReminderController extends Controller
         // Get all reminders for notes owned by the user
         $reminders = Reminder::whereHas('note', function($query) use ($request) {
             $query->where('user_id', $request->user()->id);
-        })->with('note')->latest()->paginate(10);
+        })->with('note')->latest('id')->paginate(10);
         
         return response()->json($reminders);
     }
