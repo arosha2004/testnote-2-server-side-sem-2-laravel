@@ -10,8 +10,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com"></script>
-        <!-- Alpine.js for Mobile Interactions -->
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script>
             tailwind.config = {
                 theme: {
@@ -63,60 +61,27 @@
     <body class="antialiased text-slate-800 bg-slate-50 selection:bg-indigo-500 selection:text-white">
         
         <!-- Floating Navbar -->
-        <div class="fixed top-0 w-full z-50 px-4 sm:px-6 lg:px-8 pt-6" x-data="{ mobileOpen: false }">
-            <nav class="max-w-7xl mx-auto glass rounded-[2rem] sm:rounded-full px-4 sm:px-6 py-4 shadow-lg border border-white/40 transition-all duration-300">
-                <div class="flex items-center justify-between">
-                    <a href="/" class="flex shrink-0 items-center gap-2.5">
-                        <img src="{{ asset('images/logo.png') }}" alt="NoteHub" class="h-10 w-10 rounded-full object-cover shadow-sm ring-1 ring-white/80">
-                        <span class="text-2xl font-bold tracking-tight text-brand-navy">NoteHub</span>
-                    </a>
-                    
-                    <!-- Desktop Links -->
-                    <div class="hidden sm:flex items-center gap-8">
-                        <a href="#features" class="text-sm font-bold text-slate-600 hover:text-indigo-600 transition">Features</a>
-                        <a href="#how-it-works" class="text-sm font-bold text-slate-600 hover:text-indigo-600 transition">How it Works</a>
-                    </div>
-                    
-                    <!-- Desktop Action Buttons -->
-                    <div class="hidden sm:flex items-center gap-4">
-                        @if (Route::has('login'))
-                            @auth
-                                <a href="{{ url('/dashboard') }}" class="btn-indigo px-6 py-2.5 text-sm rounded-full">Go to Dashboard</a>
-                            @else
-                                <a href="{{ route('login') }}" class="text-sm font-bold text-slate-700 hover:text-indigo-600 transition">Log in</a>
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="bg-slate-900 text-white font-bold px-6 py-2.5 rounded-full hover:bg-indigo-600 transition-colors shadow-lg">Start for free</a>
-                                @endif
-                            @endauth
-                        @endif
-                    </div>
-                    
-                    <!-- Mobile Hamburger Toggle -->
-                    <button @click="mobileOpen = !mobileOpen" class="sm:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path x-show="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            <path x-show="mobileOpen" x-cloak stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+        <div class="fixed top-0 w-full z-50 px-4 sm:px-6 lg:px-8 pt-6">
+            <nav class="max-w-7xl mx-auto glass rounded-full px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:justify-between gap-4 sm:items-center shadow-lg border border-white/40">
+                <a href="/" class="flex shrink-0 items-center gap-2.5">
+                    <img src="{{ asset('images/logo.png') }}" alt="NoteHub" class="h-10 w-10 rounded-full object-cover shadow-sm ring-1 ring-white/80">
+                    <span class="text-2xl font-bold tracking-tight text-brand-navy">NoteHub</span>
+                </a>
+                <div class="flex flex-wrap justify-center gap-4 sm:gap-8 md:justify-start">
+                    <a href="#features" class="text-sm font-bold text-slate-600 hover:text-indigo-600 transition">Features</a>
+                    <a href="#how-it-works" class="text-sm font-bold text-slate-600 hover:text-indigo-600 transition">How it Works</a>
                 </div>
-                
-                <!-- Mobile Menu Content -->
-                <div x-show="mobileOpen" x-cloak class="sm:hidden mt-4 pt-4 border-t border-slate-200/50 flex flex-col gap-4">
-                    <a href="#features" @click="mobileOpen = false" class="text-base font-semibold text-slate-600 hover:text-indigo-600 transition px-2">Features</a>
-                    <a href="#how-it-works" @click="mobileOpen = false" class="text-base font-semibold text-slate-600 hover:text-indigo-600 transition px-2">How it Works</a>
-                    <div class="border-t border-slate-200/50 my-1"></div>
-                    <div class="flex flex-col gap-3 px-2 pb-2">
-                        @if (Route::has('login'))
-                            @auth
-                                <a href="{{ url('/dashboard') }}" class="btn-indigo text-center py-3 text-sm rounded-full">Go to Dashboard</a>
-                            @else
-                                <a href="{{ route('login') }}" class="text-center font-bold text-slate-700 hover:text-indigo-600 transition py-2">Log in</a>
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="bg-slate-900 text-center text-white font-bold py-3 rounded-full hover:bg-indigo-600 transition-colors shadow-lg">Start for free</a>
-                                @endif
-                            @endauth
-                        @endif
-                    </div>
+                <div class="flex flex-wrap justify-center items-center gap-3 md:gap-4">
+                    @if (Route::has('login'))
+                        @auth
+                            <a href="{{ url('/dashboard') }}" class="btn-indigo px-6 py-2.5 text-sm rounded-full">Go to Dashboard</a>
+                        @else
+                            <a href="{{ route('login') }}" class="text-sm font-bold text-slate-700 hover:text-indigo-600 transition">Log in</a>
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}" class="bg-slate-900 text-white font-bold px-6 py-2.5 rounded-full hover:bg-indigo-600 transition-colors shadow-lg">Start for free</a>
+                            @endif
+                        @endauth
+                    @endif
                 </div>
             </nav>
         </div>

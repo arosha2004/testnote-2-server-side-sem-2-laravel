@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden border-t border-slate-100 dark:border-slate-800 sm:hidden bg-white dark:bg-slate-900">
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden border-t border-slate-100 sm:hidden">
         <div class="dashboard-shell space-y-1 py-3">
             <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'nav-pill-active block' : 'nav-pill block' }}">Dashboard</a>
             <a href="{{ route('notes') }}" class="{{ request()->routeIs('notes') ? 'nav-pill-active block' : 'nav-pill block' }}">Notes</a>
@@ -89,33 +89,6 @@
             <a href="{{ route('reminders') }}" class="{{ request()->routeIs('reminders') ? 'nav-pill-active block' : 'nav-pill block' }}">Reminders</a>
             <a href="{{ route('history') }}" class="{{ request()->routeIs('history') ? 'nav-pill-active block' : 'nav-pill block' }}">History</a>
             <a href="{{ route('trash') }}" class="{{ request()->routeIs('trash') ? 'nav-pill-active block' : 'nav-pill block' }}">Trash</a>
-            @if(auth()->user()?->role === 'admin')
-                <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.*') ? 'nav-pill-active block' : 'nav-pill block' }}">Admin</a>
-            @endif
-        </div>
-        
-        <!-- Mobile User Info & Actions -->
-        <div class="border-t border-slate-200 dark:border-slate-800 pb-3 pt-4 bg-slate-50 dark:bg-slate-900/50">
-            <div class="dashboard-shell flex items-center px-4">
-                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-100 text-sm font-semibold text-brand-teal ring-2 ring-white dark:ring-slate-700">
-                    {{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}{{ strtoupper(substr(Auth::user()->last_name, 0, 1)) }}
-                </div>
-                <div class="ml-3">
-                    <div class="text-base font-semibold text-slate-800 dark:text-slate-200">{{ Auth::user()->name }}</div>
-                    <div class="text-sm font-medium text-slate-500">{{ Auth::user()->email }}</div>
-                </div>
-            </div>
-            <div class="dashboard-shell mt-3 space-y-1">
-                <a href="{{ route('profile.show') }}" class="nav-pill block">
-                    Profile Settings
-                </a>
-                <form method="POST" action="{{ route('logout') }}" x-data>
-                    @csrf
-                    <a href="{{ route('logout') }}" class="nav-pill block text-red-600 hover:text-red-700" @click.prevent="$root.submit();">
-                        Log Out
-                    </a>
-                </form>
-            </div>
         </div>
     </div>
 </nav>
