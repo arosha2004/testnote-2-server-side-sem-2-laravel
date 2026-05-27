@@ -33,7 +33,9 @@ class GoogleController extends Controller
         } catch (InvalidStateException $e) {
             // Fallback to stateless on localhost or session mismatch issues
             try {
-                $googleUser = Socialite::driver('google')->stateless()->user();
+                /** @var \Laravel\Socialite\Two\AbstractProvider $driver */
+                $driver = Socialite::driver('google');
+                $googleUser = $driver->stateless()->user();
             } catch (Exception $ex) {
                 return redirect()->route('login')->withErrors([
                     'google' => 'Authentication failed. Please try again.',
