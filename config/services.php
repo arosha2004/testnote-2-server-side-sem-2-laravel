@@ -37,7 +37,11 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => env('GOOGLE_REDIRECT_URI') ?: (request()->secure() ? 'https://' : 'http://') . request()->getHost() . '/auth/google/callback',
+        'redirect' => env('GOOGLE_REDIRECT_URI') ?: (
+            (isset($_SERVER['HTTP_HOST']) && isset($_SERVER['REQUEST_SCHEME'])) 
+            ? $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/auth/google/callback'
+            : 'http://44.197.113.192/auth/google/callback'
+        ),
     ],
 
 ];
