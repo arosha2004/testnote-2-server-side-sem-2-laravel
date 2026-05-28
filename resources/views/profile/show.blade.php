@@ -19,6 +19,12 @@
                 </div>
 
                 <x-section-border />
+
+                <div class="mt-10 sm:mt-0">
+                    @livewire('profile.send-password-reset-link')
+                </div>
+
+                <x-section-border />
             @endif
 
             @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
