@@ -1,16 +1,17 @@
 <x-guest-layout>
-    <div class="min-h-screen bg-white flex flex-col justify-center items-center px-4" x-data="{ showPassword: false }">
-        
-        <div class="w-full max-w-[400px] flex flex-col items-center">
-            
-            <!-- Logo -->
-            <div class="mb-6">
-                <img src="{{ asset('images/logo.png') }}" alt="NoteHub logo" class="mx-auto h-20 w-20 object-contain" />
-            </div>
+    <x-authentication-card>
+        <x-slot name="logo">
+            <a href="/" class="flex flex-col items-center">
+                <img
+                    src="{{ asset('images/logo.png') }}"
+                    alt="NoteHub logo"
+                    class="h-20 w-20 rounded-full object-contain shadow-lg ring-2 ring-white"
+                >
+                <span class="mt-4 text-2xl font-bold tracking-tight text-slate-900 transition-colors">Log in</span>
+            </a>
+        </x-slot>
 
-            <!-- Header -->
-            <h1 class="text-[32px] font-bold text-slate-900 mb-8 tracking-tight">Log in</h1>
-
+        <div x-data="{ showPassword: {{ $errors->any() ? 'true' : 'false' }} }">
             <x-validation-errors class="mb-4 w-full" />
 
             @session('status')
@@ -25,24 +26,25 @@
 
                 <!-- Email Input -->
                 <div class="mb-4">
+                    <label for="email" class="block font-semibold text-sm text-slate-700 mb-1.5">{{ __('Email') }}</label>
                     <input id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" 
-                           placeholder="Email"
-                           class="w-full px-4 py-3 rounded-md border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors text-slate-800 placeholder:text-slate-400">
+                           placeholder="yourname@example.com"
+                           class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all duration-200 focus:border-brand-teal focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-teal/20 shadow-sm">
                 </div>
 
-                <!-- Password Input (Hidden by default, shown when 'log in manually' is clicked) -->
+                <!-- Password Input -->
                 <div x-show="showPassword" x-collapse class="mb-4">
-                    <input id="password" type="password" name="password" autocomplete="current-password" x-ref="pwd"
-                           placeholder="Password"
-                           class="w-full px-4 py-3 rounded-md border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors text-slate-800 placeholder:text-slate-400">
-                    
-                    @if (Route::has('password.request'))
-                        <div class="flex justify-end mt-2">
-                            <a class="text-sm text-[#3b66d5] hover:underline" href="{{ route('password.request') }}">
-                                {{ __('Forgot your password?') }}
+                    <div class="flex justify-between items-center mb-1.5">
+                        <label for="password" class="block font-semibold text-sm text-slate-700">{{ __('Password') }}</label>
+                        @if (Route::has('password.request'))
+                            <a class="text-xs text-brand-teal hover:underline font-semibold" href="{{ route('password.request') }}">
+                                {{ __('Forgot password?') }}
                             </a>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
+                    <input id="password" type="password" name="password" autocomplete="current-password" x-ref="pwd"
+                           placeholder="••••••••"
+                           class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all duration-200 focus:border-brand-teal focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-teal/20 shadow-sm">
                 </div>
 
                 <!-- Remember Me (Hidden, but active for Fortify) -->
@@ -50,15 +52,15 @@
 
                 <!-- Submit Button -->
                 <button type="submit" 
-                        class="w-full bg-[#3b66d5] hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md transition-colors shadow-sm mb-4">
+                        class="w-full inline-flex items-center justify-center px-5 py-2.5 bg-brand-teal hover:bg-teal-700 active:scale-[0.98] border border-transparent rounded-xl font-semibold text-sm text-white shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:ring-offset-2 dark:focus:ring-offset-slate-900 disabled:opacity-50 mt-2">
                     <span x-text="showPassword ? 'Log in' : 'Continue with email'"></span>
                 </button>
             </form>
 
             <!-- Toggle Text -->
-            <div class="text-center text-sm text-slate-500 mb-8 leading-relaxed">
-                <p x-show="!showPassword">We'll email you a code to log in,<br>or you can <button @click="showPassword = true" type="button" class="text-[#3b66d5] hover:underline font-medium">log in manually</button>.</p>
-                <p x-show="showPassword" style="display: none;">Enter your password to log in,<br>or <button @click="showPassword = false" type="button" class="text-[#3b66d5] hover:underline font-medium">use a magic link instead</button>.</p>
+            <div class="text-center text-sm text-slate-500 mt-4 mb-6 leading-relaxed">
+                <p x-show="!showPassword">We'll email you a code to log in,<br>or you can <button @click="showPassword = true" type="button" class="text-brand-teal hover:underline font-semibold">log in manually</button>.</p>
+                <p x-show="showPassword" style="display: none;">Enter your password to log in,<br>or <button @click="showPassword = false" type="button" class="text-brand-teal hover:underline font-semibold font-medium">use a magic link instead</button>.</p>
             </div>
 
             <!-- Divider -->
@@ -66,12 +68,12 @@
                 <div class="absolute inset-0 flex items-center">
                     <div class="w-full border-t border-slate-200"></div>
                 </div>
-                <div class="relative px-4 bg-white text-xs uppercase tracking-wider text-slate-400">or</div>
+                <div class="relative px-4 bg-white text-xs uppercase tracking-wider text-slate-400 transition-colors">or</div>
             </div>
 
             <!-- Google Login Button -->
             <a href="{{ route('auth.google') }}" 
-               class="w-full flex items-center justify-center gap-3 bg-white hover:bg-slate-50 text-slate-700 font-medium py-3 px-4 rounded-md border border-slate-300 transition-colors shadow-sm mb-6">
+               class="w-full flex items-center justify-center gap-3 bg-white hover:bg-slate-50 text-slate-700 font-semibold py-2.5 px-4 rounded-xl border border-slate-200 transition-all duration-200 shadow-sm mb-6">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -84,9 +86,8 @@
             <!-- Footer -->
             <div class="text-center text-sm text-slate-500">
                 Don't have an account? 
-                <a href="{{ route('register') }}" class="text-[#3b66d5] hover:underline font-medium">Sign up</a>
+                <a href="{{ route('register') }}" class="text-brand-teal hover:underline font-semibold">Sign up</a>
             </div>
-            
         </div>
-    </div>
+    </x-authentication-card>
 </x-guest-layout>

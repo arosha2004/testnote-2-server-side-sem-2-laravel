@@ -63,6 +63,8 @@ class GoogleController extends Controller
                     'google_token' => $googleUser->token,
                 ]);
             }
+            session()->flash('flash.banner', 'Login successful! Welcome back to NoteHub.');
+            session()->flash('flash.bannerStyle', 'success');
         } else {
             // Check if user exists with the same email address
             $user = User::where('email', $googleUser->getEmail())->first();
@@ -73,6 +75,8 @@ class GoogleController extends Controller
                     'google_id' => $googleUser->getId(),
                     'google_token' => $googleUser->token,
                 ]);
+                session()->flash('flash.banner', 'Login successful! Welcome back to NoteHub.');
+                session()->flash('flash.bannerStyle', 'success');
             } else {
                 // Register a new user
                 $nameParts = User::parseFullName($googleUser->getName());
@@ -87,6 +91,8 @@ class GoogleController extends Controller
                     'registered_date' => now(),
                     'email_verified_at' => now(),
                 ]);
+                session()->flash('flash.banner', 'Registration successful! Welcome to NoteHub.');
+                session()->flash('flash.bannerStyle', 'success');
             }
         }
 

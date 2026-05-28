@@ -48,6 +48,8 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
+        $response->assertSessionHas('flash.banner', 'Registration successful! Welcome to NoteHub.');
+        $response->assertSessionHas('flash.bannerStyle', 'success');
         $response->assertRedirect(route('dashboard', absolute: false));
     }
 }

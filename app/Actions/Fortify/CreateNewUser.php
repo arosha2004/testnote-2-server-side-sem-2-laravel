@@ -26,6 +26,9 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
+        session()->flash('flash.banner', 'Registration successful! Welcome to NoteHub.');
+        session()->flash('flash.bannerStyle', 'success');
+
         return User::create([
             ...User::parseFullName($input['name']),
             'email' => $input['email'],

@@ -10,6 +10,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script>
             tailwind.config = {
                 theme: {
@@ -59,6 +60,7 @@
         </style>
     </head>
     <body class="antialiased text-slate-800 bg-slate-50 selection:bg-indigo-500 selection:text-white">
+        <x-banner />
         
         <!-- Floating Navbar -->
         <div class="fixed top-0 w-full z-50 px-4 sm:px-6 lg:px-8 pt-6">

@@ -67,7 +67,7 @@ Route::middleware('api')->prefix('api')->group(function () {
 
 ### 2. Authentication Logic
 Tokens are generated during user registration or login, registering active devices dynamically.
-*Location:* [app/Http/Controllers/Api/AuthController.php](file:///c:/xampp/htdocs/testnote-2-server-side-sem-2-laravel/app/Http/Controllers/Api/AuthController.php#L36-L70)
+*Location:* [   ](file:///c:/xampp/htdocs/testnote-2-server-side-sem-2-laravel/app/Http/Controllers/Api/AuthController.php#L36-L70)
 
 ```php
 public function login(Request $request)

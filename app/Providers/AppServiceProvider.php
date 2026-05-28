@@ -19,6 +19,26 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        \Illuminate\Support\Facades\Event::listen(
+            \Illuminate\Auth\Events\Login::class,
+            function (\Illuminate\Auth\Events\Login $event) {
+                if (request()->hasSession()) {
+                    if (!session()->has('flash.banner')) {
+                        session()->flash('flash.banner', 'Login successful! Welcome back to NoteHub.');
+                        session()->flash('flash.bannerStyle', 'success');
+                    }
+                }
+            }
+        );
+
+        \Illuminate\Support\Facades\Event::listen(
+            \Illuminate\Auth\Events\Logout::class,
+            function (\Illuminate\Auth\Events\Logout $event) {
+                if (request()->hasSession()) {
+                    session()->flash('flash.banner', 'You have been successfully logged out.');
+                    session()->flash('flash.bannerStyle', 'success');
+                }
+            }
+        );
     }
 }
