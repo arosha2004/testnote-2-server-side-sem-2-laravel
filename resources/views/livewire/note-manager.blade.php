@@ -157,15 +157,15 @@
     @if($isViewing && $viewingNote)
         <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
             <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" wire:click="closeViewModal()"></div>
-            <div class="relative w-full max-w-4xl min-h-[500px] max-h-[90vh] flex flex-col overflow-hidden rounded-[2rem] border border-white/20 bg-white shadow-2xl transition-all">
+            <div class="relative w-full max-w-4xl min-h-[500px] max-h-[90vh] flex flex-col overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-2xl transition-all">
                 
                 {{-- Decorative Header Background --}}
                 <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-pink-500/10 pointer-events-none"></div>
                 
-                <div class="relative flex justify-between items-start border-b border-slate-100/80 px-8 py-8 sm:px-10">
+                <div class="relative flex justify-between items-start border-b border-slate-100 dark:border-slate-700/80 px-8 py-8 sm:px-10">
                     <div class="flex-1 pr-8">
                         <div class="flex items-center gap-3 mb-4">
-                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 shadow-sm border border-indigo-100">
+                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 shadow-sm border border-indigo-100 dark:border-indigo-900/50">
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                             </div>
                             @if($viewingNote->categories->isNotEmpty())
@@ -174,37 +174,37 @@
                                 <span class="badge px-3 py-1 text-xs">Uncategorized</span>
                             @endif
                         </div>
-                        <h3 class="text-3xl sm:text-4xl font-black text-slate-900 leading-tight tracking-tight">{{ $viewingNote->title }}</h3>
-                        <div class="mt-4 flex items-center gap-4 text-sm font-medium text-slate-500">
+                        <h3 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">{{ $viewingNote->title }}</h3>
+                        <div class="mt-4 flex items-center gap-4 text-sm font-medium text-slate-500 dark:text-slate-400">
                             <span class="flex items-center gap-1.5">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 Updated {{ $viewingNote->updated_at->format('M d, Y \a\t h:i A') }}
                             </span>
                         </div>
                     </div>
-                    <button wire:click="closeViewModal()" class="rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors bg-white/50 backdrop-blur-md">
+                    <button wire:click="closeViewModal()" class="rounded-full p-2 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-700 dark:hover:text-slate-200 transition-colors bg-white/50 dark:bg-slate-800/50 backdrop-blur-md">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                 </div>
                 
                 <div class="relative flex-1 overflow-y-auto px-8 py-8 sm:px-10">
-                    <div class="prose prose-lg prose-indigo max-w-none text-slate-700 leading-relaxed whitespace-pre-wrap font-medium">
+                    <div class="prose prose-lg prose-indigo dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap font-medium">
                         {{ $viewingNote->content }}
                     </div>
 
                     @if($viewingNote->attachment)
-                        <div class="mt-12 rounded-2xl border border-indigo-100 bg-indigo-50/50 p-6">
+                        <div class="mt-12 rounded-2xl border border-indigo-100 dark:border-indigo-900/50 bg-indigo-50/50 dark:bg-indigo-950/20 p-6">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-4">
-                                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-white shadow-sm text-indigo-600">
+                                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-white dark:bg-slate-800 shadow-sm text-indigo-600 dark:text-indigo-400">
                                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
                                     </div>
                                     <div>
-                                        <h4 class="text-sm font-bold text-slate-900">Attached Document</h4>
-                                        <p class="text-xs font-medium text-slate-500 mt-0.5">Click to view or download</p>
+                                        <h4 class="text-sm font-bold text-slate-900 dark:text-white">Attached Document</h4>
+                                        <p class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">Click to view or download</p>
                                     </div>
                                 </div>
-                                <a href="{{ Storage::url($viewingNote->attachment) }}" target="_blank" class="rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-indigo-600 shadow-sm border border-indigo-100 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all">
+                                <a href="{{ Storage::url($viewingNote->attachment) }}" target="_blank" class="rounded-xl bg-white dark:bg-slate-800 px-5 py-2.5 text-sm font-bold text-indigo-600 dark:text-indigo-400 shadow-sm border border-indigo-100 dark:border-indigo-900/50 hover:bg-indigo-600 dark:hover:bg-indigo-600 hover:text-white dark:hover:text-white hover:border-indigo-600 dark:hover:border-indigo-600 transition-all">
                                     Open File
                                 </a>
                             </div>
@@ -212,20 +212,20 @@
                     @endif
                 </div>
 
-                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-t border-slate-100 bg-slate-50/80 px-8 py-5 sm:px-10 gap-4">
-                    <button wire:click="confirmDelete({{ $viewingNote->id }})" class="flex items-center gap-2 text-sm font-bold text-red-500 hover:text-red-700 transition-colors order-2 sm:order-1 self-start sm:self-auto mt-2 sm:mt-0">
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-t border-slate-100 dark:border-slate-700/80 bg-slate-50/80 dark:bg-slate-850/80 px-8 py-5 sm:px-10 gap-4">
+                    <button wire:click="confirmDelete({{ $viewingNote->id }})" class="flex items-center gap-2 text-sm font-bold text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors order-2 sm:order-1 self-start sm:self-auto mt-2 sm:mt-0">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                         Delete Note
                     </button>
                     <div class="flex gap-4 order-1 sm:order-2 w-full sm:w-auto">
-                        <button wire:click="closeViewModal()" class="flex-1 sm:flex-none rounded-xl px-6 py-2.5 text-sm font-bold text-slate-600 bg-white border border-slate-200 shadow-sm hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                        <button wire:click="closeViewModal()" class="flex-1 sm:flex-none rounded-xl px-6 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-600 hover:text-slate-900 dark:hover:text-white transition-colors">
                             Close
                         </button>
-                        <button wire:click="exportPdf({{ $viewingNote->id }})" class="flex-1 sm:flex-none flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-emerald-200 hover:bg-emerald-700 hover:-translate-y-0.5 transition-all">
+                        <button wire:click="exportPdf({{ $viewingNote->id }})" class="flex-1 sm:flex-none flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-emerald-200 dark:shadow-none hover:bg-emerald-700 hover:-translate-y-0.5 transition-all">
                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             Export PDF
                         </button>
-                        <button wire:click="edit({{ $viewingNote->id }})" class="flex-1 sm:flex-none flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-indigo-200 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all">
+                        <button wire:click="edit({{ $viewingNote->id }})" class="flex-1 sm:flex-none flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 hover:-translate-y-0.5 transition-all">
                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                             Edit Note
                         </button>
