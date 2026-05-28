@@ -20,6 +20,7 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased selection:bg-teal-500 selection:text-white">
+        <x-banner />
         <div class="min-h-screen bg-slate-50 text-slate-800">
             {{ $slot }}
         </div>
