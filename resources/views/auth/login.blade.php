@@ -35,6 +35,14 @@
                     <input id="password" type="password" name="password" autocomplete="current-password" x-ref="pwd"
                            placeholder="Password"
                            class="w-full px-4 py-3 rounded-md border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors text-slate-800 placeholder:text-slate-400">
+                    
+                    @if (Route::has('password.request'))
+                        <div class="flex justify-end mt-2">
+                            <a class="text-sm text-[#3b66d5] hover:underline" href="{{ route('password.request') }}">
+                                {{ __('Forgot your password?') }}
+                            </a>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Remember Me (Hidden, but active for Fortify) -->
