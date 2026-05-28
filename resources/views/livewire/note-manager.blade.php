@@ -212,7 +212,7 @@
                     @endif
                 </div>
 
-                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-t border-slate-100 dark:border-slate-700/80 bg-slate-50/80 dark:bg-slate-850/80 px-8 py-5 sm:px-10 gap-4">
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-t border-slate-100 dark:border-slate-700/80 bg-slate-50/80 dark:bg-slate-900/50 px-8 py-5 sm:px-10 gap-4">
                     <button wire:click="confirmDelete({{ $viewingNote->id }})" class="flex items-center gap-2 text-sm font-bold text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors order-2 sm:order-1 self-start sm:self-auto mt-2 sm:mt-0">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                         Delete Note
