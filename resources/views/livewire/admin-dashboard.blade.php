@@ -245,7 +245,7 @@
                                     @endif
                                 </td>
                                 <td class="px-8 py-5 whitespace-nowrap text-center text-sm font-bold text-slate-700 dark:text-slate-300 transition-colors">{{ $user->notes_count }}</td>
-                                <td class="px-8 py-5 whitespace-nowrap text-sm font-medium text-slate-500 dark:text-slate-400 transition-colors">{{ $user->created_at->format('M d, Y') }}</td>
+                                <td class="px-8 py-5 whitespace-nowrap text-sm font-medium text-slate-500 dark:text-slate-400 transition-colors">{{ $user->created_at ? $user->created_at->format('M d, Y') : 'N/A' }}</td>
                                 <td class="px-8 py-5 whitespace-nowrap">
                                     <div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
                                         @if($user->role !== 'admin')
@@ -320,7 +320,7 @@
                                         <span class="text-slate-400 dark:text-slate-500 text-xs font-medium italic transition-colors">Uncategorized</span>
                                     @endif
                                 </td>
-                                <td class="px-8 py-5 whitespace-nowrap text-sm font-medium text-slate-500 dark:text-slate-400 transition-colors">{{ $note->created_at->format('M d, Y') }}</td>
+                                <td class="px-8 py-5 whitespace-nowrap text-sm font-medium text-slate-500 dark:text-slate-400 transition-colors">{{ $note->created_at ? $note->created_at->format('M d, Y') : 'N/A' }}</td>
                                 <td class="px-8 py-5 whitespace-nowrap">
                                     <div class="flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
                                         <button wire:click="deleteNote({{ $note->id }})" wire:confirm="Permanently delete this note?" class="text-xs font-bold text-rose-600 hover:bg-rose-50 px-4 py-2 rounded-lg transition-colors ring-1 ring-inset ring-rose-600/20">
